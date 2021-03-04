@@ -1,6 +1,6 @@
 {
   "name": "rnnjs",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "React Native Navigation testing tools",
   "main": "index.ts",
   "scripts": {
@@ -22,8 +22,7 @@
   },
   "homepage": "https://github.com/overengineered/rnnjs#readme",
   "dependencies": {
-    "lodash": "^4.17.21",
-    "react-native-navigation": "7.8.4"
+    "lodash": "4.17.15"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.168",
@@ -32,10 +31,12 @@
     "prettier": "^2.2.1",
     "react": "16.13.1",
     "react-native": "0.63.4",
+    "react-native-navigation": "7.11.1",
     "typescript": "^4.2.2"
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-navigation": "7.x"
   }
 }
