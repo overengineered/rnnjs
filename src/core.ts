@@ -117,5 +117,8 @@ export function applyCommand(scene: Configuration, action: Command): Configurati
         modals,
       };
     }
+    default: {
+      throw new Error(`Not implemented support for '${action.type}'`);
+    }
   }
 }

@@ -12,6 +12,7 @@ export type Command =
   | {type: 'popTo'; target: string; mergeOptions?: Options}
   | {type: 'showModal'; layout: Layout}
   | {type: 'dismissModal'; target: string}
+  | {type: 'dismissAllModals'}
   | {type: 'mergeOptions'; target: string; options: Options};
 
 export type ScreenData = {

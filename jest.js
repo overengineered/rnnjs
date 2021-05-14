@@ -11,6 +11,7 @@ class NotImplementedError extends Error {
 export const Navigation = {
   showModal: jest.fn(async (layout) => proxy.submit({type: 'showModal', layout})),
   dismissModal: jest.fn(async (target) => proxy.submit({type: 'dismissModal', target})),
+  dismissAllModals: jest.fn(async () => proxy.submit({type: 'dismissAllModals'})),
   push: jest.fn(async (target, layout) => proxy.submit({type: 'push', target, layout})),
   pop: jest.fn(async (target, mergeOptions) => proxy.submit({type: 'pop', target, mergeOptions})),
   popTo: jest.fn(async (target, mergeOptions) => proxy.submit({type: 'popTo', target, mergeOptions})),
