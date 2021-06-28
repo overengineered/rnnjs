@@ -28,7 +28,7 @@ export function useTransmissionChannels<T>(): [
       if (receiver === undefined) {
         subscribers[channel] = [value];
       } else if (receiver === null) {
-        throw new Error(`Closed channel ${channel}`);
+        // throw new Error(`Closed channel ${channel}`);
       } else if (Array.isArray(receiver)) {
         receiver.push(value);
       } else if (typeof receiver === 'function') {
