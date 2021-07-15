@@ -4,7 +4,7 @@ import ErrorMonitor from './components/ErrorMonitor';
 import BottomTabs from './components/BottomTabs';
 import ScreenStack from './components/ScreenStack';
 import {applyCommand, findActiveScreen} from './core';
-import {forward, noop, getComponentId, just, useTransmissionChannels} from './utils';
+import {forward, noop, getComponentId, useTransmissionChannels} from './utils';
 import {Command, Configuration, ScreenComponent, ScreenData} from './common';
 import {NavigatorProvider} from './context';
 import {proxy} from './proxy';
@@ -36,7 +36,7 @@ export default function ScreenManager({
     };
   });
 
-  // At the moment dynamically changing tabs or transmit function is not supported
+  // At the moment dynamically changing tabs is not supported
   const [tabs] = React.useState(initialTabs);
 
   const [configuration, dispatch] = React.useReducer(applyCommand, {...cleanSlate, nextId: tabs.length + 1});
@@ -61,18 +61,18 @@ export default function ScreenManager({
     [update, cleanSlate],
   );
 
-  const submit = React.useCallback((command) => just(transmit(command, send)), [transmit, send]);
+  const submit = React.useCallback((command) => void transmit(command, send), [transmit, send]);
 
   React.useEffect(() => proxy.connect(submit, onError), [submit, onError]);
 
   const [context] = React.useState(() => ({submit, locate, connect, getScreenToken, onError}));
 
   const [initOnce] = React.useState(() => submit);
-  React.useEffect(() => just(initOnce({type: 'launch'})), [initOnce]);
+  React.useEffect(() => initOnce({type: 'launch'}), [initOnce]);
 
   const activeScreen = findActiveScreen(configuration);
   const activeScreenToken = activeScreen ? getScreenToken(activeScreen) : undefined;
-  React.useEffect(() => just(onSwitchScreen(activeScreenToken)), [onSwitchScreen, activeScreenToken]);
+  React.useEffect(() => void onSwitchScreen(activeScreenToken), [onSwitchScreen, activeScreenToken]);
 
   return (
     <ErrorMonitor onError={onError}>

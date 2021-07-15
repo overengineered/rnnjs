@@ -3,10 +3,6 @@ import {Command} from './common';
 
 type Dictionary<T> = {[key: string]: T};
 
-export function just(..._: unknown[]): void {
-  return undefined;
-}
-
 export function noop() {}
 
 export function getComponentId(value: {componentId: string}) {
@@ -28,7 +24,7 @@ export function useTransmissionChannels<T>(): [
       if (receiver === undefined) {
         subscribers[channel] = [value];
       } else if (receiver === null) {
-        // throw new Error(`Closed channel ${channel}`);
+        throw new Error(`Closed channel ${channel}`);
       } else if (Array.isArray(receiver)) {
         receiver.push(value);
       } else if (typeof receiver === 'function') {
@@ -42,7 +38,10 @@ export function useTransmissionChannels<T>(): [
       const queue = subscribers[channel];
       subscribers[channel] = listener;
       Array.isArray(queue) && queue.forEach(listener);
-      return () => just((subscribers[channel] = null));
+      return () => {
+        subscribers[channel] = () => undefined;
+        setTimeout(() => (subscribers[channel] = null), 0);
+      };
     },
     [subscribers],
   );

@@ -1,7 +1,6 @@
 import type {EmitterSubscription} from 'react-native';
 import type {Navigation, EventsRegistry, Layout, CommandName} from 'react-native-navigation';
 import {Command} from './common';
-import {just} from './utils';
 
 const commandHandlers: (((command: Command) => void) | null)[] = [];
 const errorMonitors: (((error: Error) => void) | null)[] = [];
@@ -9,7 +8,7 @@ const errorMonitors: (((error: Error) => void) | null)[] = [];
 function createSubscription<T>(collection: (T | null)[], item: T) {
   const index = collection.length;
   collection.push(item);
-  return {remove: () => just((collection[index] = null))};
+  return {remove: () => void (collection[index] = null)};
 }
 
 const layoutProcessors: (Parameters<typeof Navigation['addLayoutProcessor']>[0] | null)[] = [];
@@ -33,11 +32,11 @@ export const proxy = {
   ...callbacks,
 
   submit(command: Command): void {
-    commandHandlers.forEach((fn) => just(fn && fn(command)));
+    commandHandlers.forEach((fn) => void (fn && fn(command)));
   },
 
   fail(error: Error): void {
-    errorMonitors.forEach((fn) => just(fn && fn(error)));
+    errorMonitors.forEach((fn) => void (fn && fn(error)));
   },
 
   connect(submit: (command: Command) => void, onError: (error: Error) => void): () => void {
