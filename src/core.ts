@@ -35,15 +35,15 @@ export function applyCommand(scene: Configuration, action: Command): Configurati
       // TODO: verify that action.target is correct
       // TODO: verify passProps is an object|undefined
       // TODO: when action.layout.component?.id is given, it should be valid (not exist anywhere)
-      const activeStack =
-        scene.modals.length > 0 && last(last(scene.modals) ?? [])?.componentId === action.target
+      const targetStack =
+        scene.modals.length > 0 && last(scene.modals)?.find((it) => it.componentId === action.target)
           ? last(scene.modals)
-          : scene.tabs.find((stack) => last(stack)?.componentId === action.target);
-      if (!activeStack) {
+          : scene.tabs.find((stack) => stack.find((it) => it.componentId === action.target));
+      if (!targetStack) {
         throw new Error(`Cannot push to ${action.target}`);
       }
       const modifiedStack = [
-        ...activeStack,
+        ...targetStack,
         {
           componentId,
           name: String(action.layout.component!.name),
@@ -51,35 +51,35 @@ export function applyCommand(scene: Configuration, action: Command): Configurati
           options: action.layout.component?.options,
         },
       ];
-      const tabs = scene.tabs.map((stack) => (stack === activeStack ? modifiedStack : stack));
-      const modals = scene.modals.map((stack) => (stack === activeStack ? modifiedStack : stack));
-      // TODO: should pushing to non active make the new component active?
-      return {nextId: scene.nextId + 1, activeId: componentId, selectedTab: scene.selectedTab, tabs, modals};
+      const tabs = scene.tabs.map((stack) => (stack === targetStack ? modifiedStack : stack));
+      const modals = scene.modals.map((stack) => (stack === targetStack ? modifiedStack : stack));
+      const activeId = last(modifiedStack)?.componentId === componentId ? componentId : scene.activeId;
+      return {nextId: scene.nextId + 1, activeId, selectedTab: scene.selectedTab, tabs, modals};
     }
     case 'pop': {
-      const activeStack =
+      const targetStack =
         scene.modals.length > 0
           ? last(scene.modals)
           : scene.tabs.find((stack) => last(stack)?.componentId === action.target);
-      if (!activeStack || activeStack.length === 0) {
+      if (!targetStack || targetStack.length === 0) {
         throw new Error(`Cannot pop ${action.target}`);
       }
-      const modifiedStack = activeStack.slice(0, activeStack.length - 1);
+      const modifiedStack = targetStack.slice(0, targetStack.length - 1);
       const activeId = last(modifiedStack)?.componentId ?? null;
-      const tabs = scene.tabs.map((stack) => (stack === activeStack ? modifiedStack : stack));
-      const modals = scene.modals.map((stack) => (stack === activeStack ? modifiedStack : stack));
+      const tabs = scene.tabs.map((stack) => (stack === targetStack ? modifiedStack : stack));
+      const modals = scene.modals.map((stack) => (stack === targetStack ? modifiedStack : stack));
       return {nextId: scene.nextId + 1, activeId, selectedTab: scene.selectedTab, tabs, modals};
     }
     case 'popTo': {
-      const activeStack = scene.modals.length > 0 ? last(scene.modals) : scene.tabs[scene.selectedTab];
-      const remainder = activeStack?.findIndex((e) => e.componentId === action.target);
-      if (!activeStack || remainder == null || remainder < 0) {
+      const targetStack = scene.modals.length > 0 ? last(scene.modals) : scene.tabs[scene.selectedTab];
+      const remainder = targetStack?.findIndex((e) => e.componentId === action.target);
+      if (!targetStack || remainder == null || remainder < 0) {
         throw new Error(`Cannot popTo ${action.target}`);
       }
-      const modifiedStack = activeStack.slice(0, remainder + 1);
+      const modifiedStack = targetStack.slice(0, remainder + 1);
       const activeId = last(modifiedStack)?.componentId ?? null;
-      const tabs = scene.tabs.map((stack) => (stack === activeStack ? modifiedStack : stack));
-      const modals = scene.modals.map((stack) => (stack === activeStack ? modifiedStack : stack));
+      const tabs = scene.tabs.map((stack) => (stack === targetStack ? modifiedStack : stack));
+      const modals = scene.modals.map((stack) => (stack === targetStack ? modifiedStack : stack));
       return {nextId: scene.nextId + 1, activeId, selectedTab: scene.selectedTab, tabs, modals};
     }
     case 'showModal': {
