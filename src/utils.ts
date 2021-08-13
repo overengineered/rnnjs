@@ -24,7 +24,7 @@ export function useTransmissionChannels<T>(): [
       if (receiver === undefined) {
         subscribers[channel] = [value];
       } else if (receiver === null) {
-        throw new Error(`Closed channel ${channel}`);
+        console.warn(`Component '${channel}' no longer exists, failed to merge options`);
       } else if (Array.isArray(receiver)) {
         receiver.push(value);
       } else if (typeof receiver === 'function') {
