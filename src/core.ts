@@ -27,8 +27,16 @@ export function applyCommand(scene: Configuration, action: Command): Configurati
       };
     }
     case 'selectTab': {
-      const activeId = last(scene.tabs[action.tab])!.componentId;
-      return {nextId: scene.nextId, activeId, selectedTab: action.tab, tabs: scene.tabs, modals: scene.modals};
+      if (scene.selectedTab === action.tab) {
+        const targetStack = scene.tabs[action.tab];
+        const modifiedStack = targetStack.slice(0, 1);
+        const tabs = scene.tabs.map((stack) => (stack === targetStack ? modifiedStack : stack));
+        const activeId = last(modifiedStack)!.componentId;
+        return {nextId: scene.nextId, activeId, selectedTab: action.tab, tabs: tabs, modals: scene.modals};
+      } else {
+        const activeId = last(scene.tabs[action.tab])!.componentId;
+        return {nextId: scene.nextId, activeId, selectedTab: action.tab, tabs: scene.tabs, modals: scene.modals};
+      }
     }
     case 'push': {
       const componentId = action.layout.component?.id ?? PREFIX + scene.nextId;
