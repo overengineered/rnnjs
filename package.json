@@ -1,6 +1,6 @@
 {
   "name": "rnnjs",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "React Native Navigation testing tools",
   "main": "index.ts",
   "scripts": {
