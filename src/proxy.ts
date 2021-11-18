@@ -51,7 +51,7 @@ export const proxy = {
 
   process(command: Command) {
     // Call commandListeners
-    commandListeners.forEach((fn) => fn?.(command.type, null));
+    commandListeners.forEach((fn) => fn?.(command.type, command));
 
     // Call modalDismissedListeners
     if (command.type === 'dismissModal') {
