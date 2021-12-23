@@ -1,5 +1,5 @@
 import type {EmitterSubscription} from 'react-native';
-import type {Navigation, EventsRegistry, Layout, CommandName} from 'react-native-navigation';
+import type {Navigation, EventsRegistry, Layout, CommandName, ModalDismissedEvent} from 'react-native-navigation';
 import {Command} from './common';
 
 const commandHandlers: (((command: Command) => void) | null)[] = [];
@@ -60,7 +60,7 @@ export const proxy = {
         modalsDismissed: {value: 1},
         componentId: {get: () => this.fail(new Error('Not implemented'))},
         componentName: {get: () => this.fail(new Error('Not implemented'))},
-      });
+      }) as ModalDismissedEvent;
       modalDismissedListeners.forEach((fn) => fn?.(data));
     }
 
