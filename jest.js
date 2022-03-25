@@ -1,4 +1,4 @@
-import {proxy} from './src/proxy';
+const {proxy} = require('./src/proxy');
 
 class NotImplementedError extends Error {
   constructor(message = '', ...args) {

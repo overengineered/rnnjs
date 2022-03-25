@@ -1,10 +1,11 @@
 {
   "name": "rnnjs",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "React Native Navigation testing tools",
-  "main": "index.ts",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "tsc"
+    "test": "tsc -p tsconfig.dev.json",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -29,9 +30,9 @@
     "@types/react": "^17.0.2",
     "@types/react-native": "^0.63.50",
     "prettier": "^2.2.1",
-    "react": "16.13.1",
-    "react-native": "0.63.4",
-    "react-native-navigation": "7.11.1",
+    "react": "17.0.2",
+    "react-native": "0.66.4",
+    "react-native-navigation": "7.26.0-alpha.1",
     "typescript": "4.5.2"
   },
   "peerDependencies": {
