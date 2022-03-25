@@ -9,7 +9,6 @@
     "inlineSources": true,
     "sourceMap": true,
     "jsx": "react",
-    "noEmitHelpers": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true
   }
