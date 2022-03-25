@@ -1,21 +1,11 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "CommonJS",
-    "outDir": "./dist",
-    "declaration": true,
-    "inlineSources": true,
-    "sourceMap": true,
-    "jsx": "react-native",
-    "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
-    "noEmitHelpers": true,
     "strict": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "skipLibCheck": true,
     "noErrorTruncation": true,
-    "esModuleInterop": true,
     "resolveJsonModule": true
   },
   "exclude": ["node_modules/"]

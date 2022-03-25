@@ -8,7 +8,7 @@ class NotImplementedError extends Error {
   }
 }
 
-export const Navigation = {
+exports.Navigation = {
   showModal: jest.fn(async (layout) => proxy.submit({type: 'showModal', layout})),
   dismissModal: jest.fn(async (target) => proxy.submit({type: 'dismissModal', target})),
   dismissAllModals: jest.fn(async () => proxy.submit({type: 'dismissAllModals'})),
@@ -33,4 +33,4 @@ export const Navigation = {
   })(),
 };
 
-export const CommandName = jest.requireActual('react-native-navigation').CommandName;
+exports.CommandName = jest.requireActual('react-native-navigation').CommandName;

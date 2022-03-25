@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    "noEmit": false,
+    "target": "esnext",
+    "module": "CommonJS",
+    "outDir": "./dist",
+    "declaration": true,
+    "inlineSources": true,
+    "sourceMap": true,
+    "jsx": "react",
+    "noEmitHelpers": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  }
+}

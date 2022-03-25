@@ -1,12 +1,12 @@
 {
   "name": "rnnjs",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "React Native Navigation testing tools",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "tsc -p tsconfig.dev.json",
-    "build": "tsc"
+    "test": "tsc",
+    "build": "tsc -p tsconfig.build.json"
   },
   "repository": {
     "type": "git",
