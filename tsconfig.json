@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "esnext",
     "module": "CommonJS",
     "outDir": "./dist",
-    "noErrorTruncation": true,
+    "declaration": true,
     "inlineSources": true,
     "sourceMap": true,
     "jsx": "react-native",
@@ -14,6 +14,7 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "skipLibCheck": true,
+    "noErrorTruncation": true,
     "esModuleInterop": true,
     "resolveJsonModule": true
   },
