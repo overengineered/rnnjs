@@ -2,7 +2,7 @@
   "extends": "./tsconfig",
   "compilerOptions": {
     "noEmit": false,
-    "target": "esnext",
+    "target": "es5",
     "module": "CommonJS",
     "outDir": "./dist",
     "declaration": true,
