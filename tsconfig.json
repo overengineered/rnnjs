@@ -6,7 +6,8 @@
     "noUnusedLocals": true,
     "skipLibCheck": true,
     "noErrorTruncation": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   },
   "exclude": ["node_modules/"]
 }

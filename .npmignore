@@ -1,4 +1,4 @@
 .prettierrc.json
 tsconfig.json
-tsconfig.dev.json
+tsconfig.build.json
 src

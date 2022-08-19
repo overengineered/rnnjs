@@ -1,11 +1,12 @@
 import * as React from 'react';
-import {Options} from 'react-native-navigation';
+import {LayoutComponent, Options} from 'react-native-navigation';
+import _ from 'lodash/fp';
 import ErrorMonitor from './components/ErrorMonitor';
 import BottomTabs from './components/BottomTabs';
 import ScreenStack from './components/ScreenStack';
 import {applyCommand, findActiveScreen} from './core';
 import {forward, noop, getComponentId, useTransmissionChannels} from './utils';
-import {Command, Configuration, ScreenComponent, ScreenData} from './common';
+import {Command, Configuration, mergeNavigationOptions, ScreenComponent, ScreenData} from './common';
 import {NavigatorProvider} from './context';
 import {proxy} from './proxy';
 
@@ -43,7 +44,13 @@ export default function ScreenManager({
   const [update, connect] = useTransmissionChannels<Options>();
 
   const send = React.useCallback(
-    (message) => {
+    (original: Command) => {
+      const message = _.cloneDeep(original);
+      const component = findLayoutComponent(message);
+      if (component !== null) {
+        const staticOptions = buildComponentOptions(locate(String(component.name)), component.passProps);
+        component.options = mergeNavigationOptions(staticOptions, component.options);
+      }
       proxy.process(message);
 
       switch (message.type) {
@@ -87,4 +94,15 @@ export default function ScreenManager({
       </NavigatorProvider>
     </ErrorMonitor>
   );
+}
+
+function findLayoutComponent(command: Command): LayoutComponent | null {
+  if ('layout' in command) {
+    return command.layout?.stack?.children?.[0].component ?? command.layout?.component ?? null;
+  }
+  return null;
+}
+
+function buildComponentOptions({options}: ScreenComponent, props?: object): Options {
+  return typeof options === 'function' ? options(props) : typeof options === 'object' ? options : {};
 }

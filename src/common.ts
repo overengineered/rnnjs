@@ -41,6 +41,6 @@ function arraysAsValues(objValue: unknown, srcValue: unknown) {
   return undefined; // default lodash merge
 }
 
-export function mergeNavigationOptions(currentOptions: Options | undefined, patch: Options): Options {
-  return _.mergeWith(arraysAsValues, currentOptions, patch);
+export function mergeNavigationOptions(currentOptions: Options | undefined, patch: Options | undefined): Options {
+  return patch == null ? currentOptions ?? {} : _.mergeWith(arraysAsValues, currentOptions, patch);
 }
