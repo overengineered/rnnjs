@@ -125,8 +125,16 @@ export function applyCommand(scene: Configuration, action: Command): Configurati
         modals,
       };
     }
-    default: {
-      throw new Error(`Not implemented support for '${action.type}'`);
+    case 'dismissAllModals': {
+      // TODO: assert that modal/alert/actionSheet is active
+      const revealed = last(scene.tabs[scene.selectedTab] ?? []);
+      return {
+        nextId: scene.nextId,
+        activeId: revealed ? revealed.componentId : null,
+        selectedTab: scene.selectedTab,
+        tabs: scene.tabs,
+        modals: [],
+      };
     }
   }
 }
