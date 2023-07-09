@@ -66,7 +66,7 @@ export function applyCommand(scene: Configuration, action: Command): Configurati
     }
     case 'pop': {
       const targetStack =
-        scene.modals.length > 0
+        scene.modals.length > 0 && last(last(scene.modals) ?? [])?.componentId === action.target
           ? last(scene.modals)
           : scene.tabs.find((stack) => last(stack)?.componentId === action.target);
       if (!targetStack || targetStack.length === 0) {
