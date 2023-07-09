@@ -25,7 +25,7 @@ export default function TopBar(props: {topBar?: OptionsTopBar; componentId: stri
   const dismiss = React.useCallback(() => submit({type: 'dismissModal', target: componentId}), [submit, componentId]);
   const close = props.closeAction === 'DISMISS' ? dismiss : pop;
 
-  return (
+  return topBar?.visible === false ? null : (
     <View testID={topBar?.testID}>
       {!!topBar?.backButton && <TouchableOpacity testID={topBar.backButton.testID} onPress={close} />}
       {!!topBar?.title?.text && <Text>{topBar.title.text}</Text>}
