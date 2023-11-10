@@ -19,7 +19,9 @@ exports.Navigation = {
 
   addLayoutProcessor: proxy.addLayoutProcessor,
 
-  addOptionProcessor: jest.fn(() => proxy.fail(new NotImplementedError('addOptionProcessor'))),
+  // Difficult to implement right. Usually used modify styles, which don't matter in Jest tests
+  addOptionProcessor: () => ({remove: () => undefined}),
+
   registerComponent: jest.fn(() => proxy.fail(new NotImplementedError('registerComponent'))),
   showOverlay: jest.fn(() => proxy.fail(new NotImplementedError('showOverlay'))),
   dismissOverlay: jest.fn(() => proxy.fail(new NotImplementedError('dismissOverlay'))),
